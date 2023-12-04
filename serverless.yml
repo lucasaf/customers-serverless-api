@@ -1,3 +1,5 @@
+org: lucasaf
+app: customers-serverless-api
 service: customers-serverless-api
 
 plugins:
