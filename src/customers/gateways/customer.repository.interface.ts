@@ -6,6 +6,6 @@ export interface ICustomerRepository {
   create(customer: CreateCustomerDto): Promise<Customer>;
   findAll(): Promise<Customer[]>;
   findOne(id: string): Promise<Customer>;
-  update(id: string, customer: UpdateCustomerDto): Promise<Customer>;
-  remove(id: string): Promise<void>;
+  updateOne(id: string, customer: UpdateCustomerDto);
+  removeOne(id: string): Promise<void>;
 }

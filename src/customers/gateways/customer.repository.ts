@@ -62,19 +62,28 @@ export class CustomerRepository implements ICustomerRepository {
     return result.Item as Customer;
   }
 
-  async update(id: string, updateCustomerDto: UpdateCustomerDto): Promise<Customer> {
-    const result = await this.dynamoDbClient.send(
-      new UpdateCommand({
-        TableName: this.tableName,
-        Key: { id },
-        // UpdateExpression e ExpressionAttributeValues precisam ser construídos com base em updateCustomerDto
-        ReturnValues: 'ALL_NEW',
-      }),
-    );
-    return result.Attributes as Customer;
+  async updateOne(id: string, updateCustomerDto: UpdateCustomerDto) {
+    const params = {
+      TableName: this.tableName,
+      Key: { id },
+      UpdateExpression: 'set #name = :n, #email = :e',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+      },
+      ExpressionAttributeValues: {
+        ':n': updateCustomerDto.name,
+        ':e': updateCustomerDto.email,
+      },
+      ReturnValues: 'UPDATED_NEW' as const,
+    };
+
+    const { Attributes } = await this.dynamoDbClient.send(new UpdateCommand(params));
+
+    return Attributes;
   }
 
-  async remove(id: string): Promise<void> {
+  async removeOne(id: string): Promise<void> {
     await this.dynamoDbClient.send(
       new DeleteCommand({
         TableName: this.tableName,

@@ -32,7 +32,7 @@ export class CustomersService {
     if (!customer) {
       throw new NotFoundException(`Customer with ID ${id} not found`);
     }
-    return this.customerRepository.update(id, updateCustomerDto);
+    return this.customerRepository.updateOne(id, updateCustomerDto);
   }
 
   async removeOne(id: string): Promise<void> {
@@ -40,7 +40,7 @@ export class CustomersService {
     if (!customer) {
       throw new NotFoundException(`Customer with ID ${id} not found`);
     }
-    await this.customerRepository.remove(id);
+    await this.customerRepository.removeOne(id);
   }
 
   search(query: string) {
