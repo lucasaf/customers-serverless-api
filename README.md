@@ -42,12 +42,17 @@ $ cd customers-serverless-api
 $ npm install
 ```
 
+## Install DynamoDB locally
+
+````bash
+$ sls dynamodb install
+
 ## Running the app
 
 ```bash
 # development
 $ npm run start:dev
-```
+````
 
 ## Test
 
@@ -77,10 +82,12 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 
 - Validate the inputs and outputs
 
+  - Explicit domain layer;
   - Create the DTOs;
   - validate Model and Customer Domain;
   - Add global pipes and filters
   - Refactor error handler and review exception messages and HTTP status code;
+  - review structure layers (thinking about DDD, hexagonal or clean arch)
 
 - Endpoint that performs a free text search across all customer fields;
 
@@ -89,6 +96,9 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 - API endpoint security
 
   - add safeguard data access and transactions
+  - add security for lambdas (authorize Lambda, Secret Manager)
+  - authentication and authorization (a serverless as well);
+  - CORS protection
 
 - Logging, monitoring, and auditing
 
