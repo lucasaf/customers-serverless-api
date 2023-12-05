@@ -1,3 +1,5 @@
+import Email from '../shared/email';
+
 export default class CustomerModel {
-  constructor(public id: string, public name: string, public email: string) {}
+  constructor(public id: string, public name: string, public email: Email) {}
 }
