@@ -44,15 +44,16 @@ $ npm install
 
 ## Install DynamoDB locally
 
-````bash
+```bash
 $ sls dynamodb install
+```
 
 ## Running the app
 
 ```bash
 # development
 $ npm run start:dev
-````
+```
 
 ## Test
 
