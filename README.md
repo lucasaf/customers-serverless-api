@@ -10,7 +10,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 What you need to install the software:
 
-- Node.js (recommended version)
+- Node.js (18.x+)
 - AWS CLI configured with appropriate credentials
 - Serverless Framework
 

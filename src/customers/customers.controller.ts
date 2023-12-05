@@ -1,8 +1,10 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CustomersService } from './customers.service';
 import { CreateCustomerDto } from './dto/create-customer.dto';
 import { UpdateCustomerDto } from './dto/update-customer.dto';
 
+@ApiTags('customers')
 @Controller('customers')
 export class CustomersController {
   constructor(private readonly customersService: CustomersService) {}
@@ -12,6 +14,7 @@ export class CustomersController {
     return this.customersService.create(createCustomerDto);
   }
 
+  @ApiResponse({ status: 200, description: 'Return all customers.', type: [CreateCustomerDto] })
   @Get()
   findAll() {
     return this.customersService.findAll();

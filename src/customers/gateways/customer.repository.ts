@@ -24,11 +24,11 @@ export class CustomerRepository implements ICustomerRepository {
     this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({}));
   }
 
-  async create(customer: Customer): Promise<Customer> {
+  async create(customer): Promise<Customer> {
     const { name, email } = customer;
     const id = uuid();
 
-    const customerModel = new CustomerModel(id, name, email.value);
+    const customerModel = new CustomerModel(id, name, email);
 
     await this.dynamoDbClient.send(
       new PutCommand({
