@@ -88,6 +88,7 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
   - Add global pipes and filters
   - Refactor error handler and review exception messages and HTTP status code;
   - review structure layers (thinking about DDD, hexagonal or clean arch)
+  - improve unit tests and add others like integration and E2E
 
 - Endpoint that performs a free text search across all customer fields;
 
