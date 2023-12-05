@@ -11,7 +11,7 @@ plugins:
 provider:
   name: aws
   runtime: nodejs18.x
-  timeout: 130
+  # timeout: 130
   # deploymentMethod: direct
   iam:
     role:
