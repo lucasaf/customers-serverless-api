@@ -15,7 +15,7 @@ describe('CustomersService', () => {
         .mockImplementation(() => Promise.resolve([{ id: '123', name: 'Lucas', email: 'lucas@gmail.com' }])),
       findOne: jest.fn().mockImplementation((id) => Promise.resolve({ id, name: 'Lucas', email: 'lucas@gmail.com' })),
       update: jest.fn().mockImplementation((id, customer) => Promise.resolve({ id, ...customer })),
-      remove: jest.fn().mockImplementation((id) => Promise.resolve()),
+      remove: jest.fn().mockImplementation(() => Promise.resolve()),
     };
 
     const module: TestingModule = await Test.createTestingModule({
