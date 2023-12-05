@@ -100,6 +100,7 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 
   - add safeguard data access and transactions
   - add security for lambdas (authorize Lambda, Secret Manager)
+    ![Alt text](image.png)
   - authentication and authorization (a serverless as well);
   - CORS protection
 
