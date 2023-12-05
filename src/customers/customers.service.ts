@@ -43,7 +43,7 @@ export class CustomersService {
     await this.customerRepository.remove(id);
   }
 
-  search(query: string) {
-    throw new Error('Method not implemented.');
+  search(query: string, limit: number, startKey?: string) {
+    return this.customerRepository.searchByNameOrEmail(query, limit, startKey);
   }
 }

@@ -20,6 +20,11 @@ export class CustomersController {
     return this.customersService.findAll();
   }
 
+  @Get('/search')
+  search(@Query('query') query: string, @Query('limit') limit = 10, @Query('startKey') startKey?: string) {
+    return this.customersService.search(query, limit, startKey);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.customersService.findOne(id);
@@ -33,10 +38,5 @@ export class CustomersController {
   @Delete(':id')
   removeOne(@Param('id') id: string) {
     return this.customersService.removeOne(id);
-  }
-
-  @Get('/search')
-  search(@Query('q') query: string) {
-    return this.customersService.search(query);
   }
 }

@@ -1,4 +1,4 @@
-import { DynamoDBClient } from '@aws-sdk/client-dynamodb';
+import { DynamoDBClient, ScanCommandInput } from '@aws-sdk/client-dynamodb';
 import {
   DeleteCommand,
   DynamoDBDocumentClient,
@@ -24,6 +24,36 @@ export class CustomerRepository implements ICustomerRepository {
     this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({}));
   }
 
+  async searchByNameOrEmail(query: string, limit: number, startKey?: string) {
+    console.log(query);
+    const params: ScanCommandInput = {
+      TableName: this.tableName,
+      FilterExpression: 'contains(#name, :query) or contains(#email, :query)',
+      ExpressionAttributeNames: {
+        '#name': 'name',
+        '#email': 'email',
+      },
+      ExpressionAttributeValues: {
+        ':query': { S: query },
+      },
+      Limit: limit,
+    };
+
+    if (startKey) {
+      params.ExclusiveStartKey = {
+        id: { S: startKey },
+      };
+    }
+
+    const result = await this.dynamoDbClient.send(new ScanCommand(params));
+    console.log(result);
+
+    return {
+      items: result.Items || [],
+      lastEvaluatedKey: result.LastEvaluatedKey ? result.LastEvaluatedKey.id : null,
+    };
+  }
+
   async create(customer): Promise<Customer> {
     const { name, email } = customer;
     const id = uuid();
@@ -46,6 +76,7 @@ export class CustomerRepository implements ICustomerRepository {
         TableName: this.tableName,
       }),
     );
+
     return result.Items as Customer[];
   }
 
