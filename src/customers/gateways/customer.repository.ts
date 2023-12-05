@@ -7,6 +7,7 @@ import {
   ScanCommand,
   UpdateCommand,
 } from '@aws-sdk/lib-dynamodb';
+import { Client } from '@elastic/elasticsearch';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { v4 as uuid } from 'uuid';
@@ -19,9 +20,26 @@ import { ICustomerRepository } from './customer.repository.interface';
 export class CustomerRepository implements ICustomerRepository {
   private readonly dynamoDbClient: DynamoDBDocumentClient;
   private readonly tableName = this.configService.get('TABLE_NAME');
+  private readonly esClient = new Client({ node: process.env.ELASTICSEARCH_ENDPOINT });
 
   constructor(private configService: ConfigService) {
     this.dynamoDbClient = DynamoDBDocumentClient.from(new DynamoDBClient({}));
+  }
+
+  async search(query: any) {
+    const result = await this.esClient.search({
+      index: 'id',
+      body: {
+        query: {
+          multi_match: {
+            query: query,
+            fields: ['name', 'email'],
+          },
+        },
+      },
+    });
+
+    return result.hits.hits.map((hit) => hit._source);
   }
 
   async create(customer): Promise<Customer> {
@@ -67,7 +85,6 @@ export class CustomerRepository implements ICustomerRepository {
       new UpdateCommand({
         TableName: this.tableName,
         Key: { id },
-        // UpdateExpression e ExpressionAttributeValues precisam ser construídos com base em updateCustomerDto
         ReturnValues: 'ALL_NEW',
       }),
     );

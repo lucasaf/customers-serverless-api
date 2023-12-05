@@ -35,6 +35,15 @@ functions:
     handler: dist/serverless.handler
     events:
       - httpApi: '*'
+  dynamodbToElasticsearch:
+    handler: dist/serverless.handler
+    events:
+      - stream:
+          type: dynamodb
+          arn:
+            Fn::GetAtt: [CustomersTable, StreamArn]
+    environment:
+      ELASTICSEARCH_ENDPOINT: { Fn::GetAtt: [ElasticsearchDomain, DomainEndpoint] }
 
 resources: # CloudFormation template syntax
   Resources:
@@ -51,3 +60,22 @@ resources: # CloudFormation template syntax
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+        StreamSpecification:
+          StreamViewType: 'NEW_AND_OLD_IMAGES'
+    ElasticsearchDomain:
+      Type: 'AWS::Elasticsearch::Domain'
+      Properties:
+        DomainName: 'costumers-search'
+        ElasticsearchVersion: '7.9'
+        ElasticsearchClusterConfig:
+          InstanceType: 't2.small.elasticsearch'
+          InstanceCount: 1
+        AccessPolicies:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                AWS: '*'
+              Action:
+                - 'es:*'
+              Resource: 'arn:aws:es:us-east-1:xxxxxx:domain/xxxxx/*'

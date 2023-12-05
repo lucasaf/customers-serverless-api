@@ -44,6 +44,6 @@ export class CustomersService {
   }
 
   search(query: string) {
-    throw new Error('Method not implemented.');
+    return this.customerRepository.search(query);
   }
 }

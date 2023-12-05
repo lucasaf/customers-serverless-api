@@ -8,4 +8,5 @@ export interface ICustomerRepository {
   findOne(id: string): Promise<Customer>;
   update(id: string, customer: UpdateCustomerDto): Promise<Customer>;
   remove(id: string): Promise<void>;
+  search(query);
 }

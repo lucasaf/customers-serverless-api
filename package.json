@@ -21,6 +21,7 @@
   },
   "dependencies": {
     "@aws-sdk/lib-dynamodb": "^3.465.0",
+    "@elastic/elasticsearch": "^8.10.0",
     "@nestjs/common": "^10.0.0",
     "@nestjs/config": "^3.1.1",
     "@nestjs/core": "^10.0.0",
