@@ -73,6 +73,31 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 - NestJS - [https://nestjs.com](https://nestjs.com/)
 - AWS DynamoDB - [https://aws.amazon.com/pt/dynamodb/](https://aws.amazon.com/pt/dynamodb/)
 
+## Improvements
+
+- Validate the inputs and outputs
+
+  - Create the DTOs;
+  - validate Model and Customer Domain;
+  - Add global pipes and filters
+  - Refactor error handler and review exception messages and HTTP status code;
+
+- Endpoint that performs a free text search across all customer fields;
+
+  - Stream DynamoDB to Elasticsearch
+
+- API endpoint security
+
+  - add safeguard data access and transactions
+
+- Logging, monitoring, and auditing
+
+- Serverless APIs
+  - create a function for all methods individually;
+  - integrate with Elasticsearch;
+
+Nest is [MIT licensed](LICENSE).
+
 ## License
 
 Nest is [MIT licensed](LICENSE).
