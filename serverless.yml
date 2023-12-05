@@ -2,20 +2,52 @@ org: lucasaf
 app: customers-serverless-api
 service: customers-serverless-api
 
+frameworkVersion: '3'
+
 plugins:
+  - serverless-dynamodb-local
   - serverless-offline
 
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs18.x
+  timeout: 130
+  # deploymentMethod: direct
+  iam:
+    role:
+      statements:
+        - Effect: 'Allow'
+          Action:
+            - 'dynamodb:DescribeTable'
+            - 'dynamodb:Query'
+            - 'dynamodb:Scan'
+            - 'dynamodb:GetItem'
+            - 'dynamodb:PutItem'
+            - 'dynamodb:UpdateItem'
+            - 'dynamodb:DeleteItem'
+          Resource:
+            - Fn::GetAtt: [CustomersTable, Arn]
+  environment:
+    TABLE_NAME: CustomersTable
 
 functions:
   main:
     handler: dist/serverless.handler
     events:
-      - http:
-          method: ANY
-          path: /
-      - http:
-          method: ANY
-          path: '{proxy+}'
+      - httpApi: '*'
+
+resources: # CloudFormation template syntax
+  Resources:
+    CustomersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: CustomersTable
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
