@@ -83,7 +83,8 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 
 - Validate the inputs and outputs
 
-  - Explicit domain layer;
+  - protect domain layer;
+    - Create interfaces to export properties;
   - Create the DTOs;
   - validate Model and Customer Domain;
   - Add global pipes and filters
@@ -107,8 +108,6 @@ Lucas Alves Ferreira - Initial work - (https://www.sgithub.com/lucasaf)
 - Serverless APIs
   - create a function for all methods individually;
   - integrate with Elasticsearch;
-
-Nest is [MIT licensed](LICENSE).
 
 ## License
 
