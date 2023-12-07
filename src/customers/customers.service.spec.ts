@@ -14,8 +14,8 @@ describe('CustomersService', () => {
         .fn()
         .mockImplementation(() => Promise.resolve([{ id: '123', name: 'Lucas', email: 'lucas@gmail.com' }])),
       findOne: jest.fn().mockImplementation((id) => Promise.resolve({ id, name: 'Lucas', email: 'lucas@gmail.com' })),
-      update: jest.fn().mockImplementation((id, customer) => Promise.resolve({ id, ...customer })),
-      remove: jest.fn().mockImplementation(() => Promise.resolve()),
+      updateOne: jest.fn().mockImplementation((id, customer) => Promise.resolve({ id, ...customer })),
+      removeOne: jest.fn().mockImplementation(() => Promise.resolve()),
     };
 
     const module: TestingModule = await Test.createTestingModule({
@@ -68,11 +68,11 @@ describe('CustomersService', () => {
 
   describe('delete', () => {
     it('should delete a customer', async () => {
-      mockRepository.remove = jest.fn().mockResolvedValue(undefined);
+      mockRepository.removeOne = jest.fn().mockResolvedValue(undefined);
 
       await service.removeOne('123');
 
-      expect(mockRepository.remove).toHaveBeenCalledWith('123');
+      expect(mockRepository.removeOne).toHaveBeenCalledWith('123');
     });
   });
 });
